@@ -2,38 +2,34 @@
 
 # -----------------------------------------------------------------------------
 
-cClear="\e[0m"
+cClear="\033[0m"
 
-cGreenBold="\e[1;32m"
-cGreen="\e[32m"
-cGreenBrightBold="\e[1;92m"
-cGreenBright="\e[92m"
+cGreenBold="\033[1;32m"
+cGreen="\033[32m"
+cGreenBrightBold="\033[1;92m"
+cGreenBright="\033[92m"
 
-cYellowBold="\e[1;33m"
-cYellow="\e[33m"
-cYellowBrightBold="\e[1;93m"
-cYellowBright="\e[93m"
+cYellowBold="\033[1;33m"
+cYellow="\033[33m"
+cYellowBrightBold="\033[1;93m"
+cYellowBright="\033[93m"
 
-cBlueBold="\e[1;34m"
-cBlue="\e[34m"
-cBlueBrightBold="\e[1;94m"
-cBlueBright="\e[94m"
+cBlueBold="\033[1;34m"
+cBlue="\033[34m"
+cBlueBrightBold="\033[1;94m"
+cBlueBright="\033[94m"
 
-cRedBold="\e[1;31m"
-cRed="\e[31m"
-cRedBrightBold="\e[1;91m"
-cRedBright="\e[91m"
+cRedBold="\033[1;31m"
+cRed="\033[31m"
+cRedBrightBold="\033[1;91m"
+cRedBright="\033[91m"
 
 # -----------------------------------------------------------------------------
 
-__DIR="$(dirname "$(realpath "$0")")"
+__DIR="$( dirname "$0" )"
 __FILTER="$1"
 
 # -----------------------------------------------------------------------------
-
-fetch_in() {
-    ( cd "$1" && git fetch; );
-}
 
 filter_by() {
     local needle="$1"
@@ -45,27 +41,37 @@ filter_by() {
     [[ "${haystack}" == *"${needle}"* ]]
 }
 
+fetch_in() {
+    ( cd "$1" && git fetch; )
+}
+
+fetch_in_folder() {
+    local workdir="$1"
+
+    echo -e "[ ${cGreenBrightBold}PROCESSING${cClear} ]: ${cGreenBright}${workdir}${cClear}"
+    echo ""
+
+    for f in "${workdir}/"*/;
+    do
+        filter_by "$__FILTER" "$f" || continue
+
+        if [ -d "$f" ];
+        then
+            echo -e "[ ${cYellowBright}FETCHING${cClear} ]: ${cYellowBright}$f${cClear} ${cBlue}"
+
+            fetch_in "$f"
+
+            echo -e "${cClear}[ ${cGreen}FINISHED${cClear} ]"
+            echo ""
+        fi
+    done
+}
+
 # -----------------------------------------------------------------------------
 
 echo ""
-echo -e "[ ${cGreenBrightBold}PROCESSING${cClear} ]:"
-echo ""
 
-for f in "$__DIR"/*/;
-do
-    filter_by "$__FILTER" "$f" || continue
-
-    if [ -d "$f" ];
-    then
-
-        echo -e "[ ${cYellowBright}FETCHING${cClear} ]: ${cYellowBright}$f${cClear} ${cBlue}"
-
-        fetch_in "$f"
-
-        echo -e "${cClear}[ ${cGreen}FINISHED${cClear} ]"
-        echo ""
-    fi
-done
+fetch_in_folder "${__DIR}"
 
 # -----------------------------------------------------------------------------
 
