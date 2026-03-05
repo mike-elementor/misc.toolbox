@@ -9,6 +9,7 @@
     diffc = "diff --cached"
     logp = "log -p"
     oneline = "log --pretty='format:%C(yellow bold)%h %C(green bold)%as %Creset%C(white)%s'"
+    oneline-ns = "log --name-status --pretty='format:%C(yellow bold)%h %C(green bold)%as %Creset%C(white)%s'"
 
 [color "status"]
     branch = "green bold"
@@ -30,6 +31,9 @@
 [core]
     editor = mcedit
     pager = less -X
+
+[pull]
+    rebase = false
 
 [init]
 	defaultBranch = master
