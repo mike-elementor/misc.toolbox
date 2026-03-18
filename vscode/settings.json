@@ -1,10 +1,17 @@
 {
     "editor.rulers": [ 80, 100, 120 ],
-    "workbench.colorTheme": "Default Dark+",
+    "editor.renderWhitespace": "all",
+
+    "files.trimTrailingWhitespace": true,
+
     "workbench.sideBar.location": "right",
+
+    "workbench.colorTheme": "Default Dark+",
     "window.customTitleBarVisibility": "auto",
     "window.newWindowProfile": "Default",
     "window.dialogStyle": "custom",
     "window.titleBarStyle": "custom",
-    "files.trimTrailingWhitespace": true
+
+    "chat.disableAIFeatures": true,
+    "update.mode": "manual"
 }
