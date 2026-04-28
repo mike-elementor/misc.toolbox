@@ -8,8 +8,10 @@
     wdiff = "diff --word-diff"
     diffc = "diff --cached"
     logp = "log -p"
-    oneline = "log --pretty='format:%C(yellow bold)%h %C(green bold)%as %Creset%C(white)%s'"
-    oneline-ns = "log --name-status --pretty='format:%C(yellow bold)%h %C(green bold)%as %Creset%C(white)%s'"
+    ll = "log --pretty='format:%C(yellow bold)%h %C(green bold)%as %Creset%C(white)%s'"
+    lln = "ll --name-status"
+    oneline = "ll"
+    oneline-ns = "lln'"
 
 [color "status"]
     branch = "green bold"
